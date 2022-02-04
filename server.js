@@ -176,15 +176,11 @@ app.listen(PORT, "127.0.0.1", async () => {
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
 
-  try {
-    await client.messages.create({
+    
+client.messages.create({
       body: "Test: "+sum,
       from: "+14106715603",
-      to: "+12312374619",
-    });
-  } catch (e) {
-    console.error(e);
-  } finally {
-    console.log("We do cleanup here");
-  }
+      to: "+12312374619",})
+      .then(message => console.log(message.sid));
+ 
 });
