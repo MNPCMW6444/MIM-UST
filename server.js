@@ -19,6 +19,8 @@ const asd = process.env.PORT || 10004;
 const app = express();
 const cache = CacheService.cache;
 
+const minnininn = 500;
+
 app.use(cors());
 //app.use(timeout(600000));
 
@@ -183,12 +185,12 @@ app.get('/', function(request, response) {
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
 console.log(sum)
- /*     
+      
 client.messages.create({
-      body: "Test: "+sum,
+      body: "Bot is running and will notify if MIM>"+minnininn,
       from: "+14106715603",
-      to: "+12312374619",})
-      .then(message => console.log(message.sid)); */
+      to: "+13204561157",})
+      .then(message => console.log(message.sid)); 
 
         setTimeout(() => {check22();}, 5000); 
 
@@ -209,7 +211,7 @@ async function check22(){
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
   console.log(sum)
-if(sum>500){
+if(sum>minnininn){
  client.messages.create({
       body: "Test: "+sum,
       from: "+14106715603",
