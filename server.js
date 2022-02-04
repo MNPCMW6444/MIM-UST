@@ -14,7 +14,6 @@ import {
 import moment from "moment";
 
 import Twilio from "twilio";
-import { check } from "prettier";
 
 const PORT = 5001;
 const app = express();
