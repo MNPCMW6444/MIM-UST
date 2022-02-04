@@ -162,7 +162,7 @@ app.get(
 
 app.listen(PORT, "127.0.0.1", async () => {
   console.log(`Server listening for ${corsOptions.origin} requests ...`);
-  const borrwableEth = "asdadfsadfsdf"; //=    await getBorrowableMimsEthereum();
+  const borrwableEth = await getBorrowableMimsEthereum();
   /* const borrowableAvax = await getBorrowableMimsAvalanche();
   const borrowableFtm = await getBorrowableMimsFantom();
   const borrowableArbi = await getBorrowableMimsArbitrum();
