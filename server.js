@@ -196,11 +196,11 @@ async function check22(){
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
   console.log(sum)
-
-/* client.messages.create({
+if(sum>500){
+ client.messages.create({
       body: "Test: "+sum,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); */
+      .then(message => console.log(message.sid)); }
      setTimeout(() => {check22();}, 60000);
 }
