@@ -19,7 +19,7 @@ const asd = process.env.PORT || 10004;
 const app = express();
 const cache = CacheService.cache;
 
-const minnininn = 500;
+const minnininn = 50000;
 
 app.use(cors());
 //app.use(timeout(600000));
@@ -189,7 +189,7 @@ console.log(sum)
 client.messages.create({
       body: "Bot is running and will notify if MIM>"+minnininn,
       from: "+14106715603",
-      to: "+13204561157",})
+      to: "+12312374619",})
       .then(message => console.log(message.sid)); 
 
         setTimeout(() => {check22();}, 5000); 
