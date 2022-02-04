@@ -177,29 +177,31 @@ app.listen(PORT, "127.0.0.1", async () => {
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
 console.log(sum)
-    /* 
+ /*     
 client.messages.create({
       body: "Test: "+sum,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid));
+      .then(message => console.log(message.sid)); */
 
-        setTimeout(() => {check();}, 5000); */
+        setTimeout(() => {check22();}, 5000); 
 
  
 });
 
-async function check(){
+async function check22(){
   const borrwableEth = await getBorrowableMimsEthereum();
  let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
   borrwableEth2.split(".").join("");
   let checkedNew = borrwableEth2.split(".").join("");
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
-client.messages.create({
+  console.log(sum)
+
+/* client.messages.create({
       body: "Test: "+sum,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid));
-     setTimeout(() => {check();}, 60000);
+      .then(message => console.log(message.sid)); */
+     setTimeout(() => {check22();}, 60000);
 }
