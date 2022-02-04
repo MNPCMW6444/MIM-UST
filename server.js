@@ -44,7 +44,7 @@ const corsOptions = {
       ? "http://localhost:3001"
       : "https://www.byebyedai.money",
 };
-
+/* 
 app.get(
   "/getSpellHolders",
   cache("30 seconds"),
@@ -146,11 +146,11 @@ app.get(
   async (req, res) => {
     console.log("Update borrowable MIMs...", moment().format("HH:mm:ss"));
     const borrwableEth = await getBorrowableMimsEthereum();
-    /*  const borrowableAvax = await getBorrowableMimsAvalanche();
+     const borrowableAvax = await getBorrowableMimsAvalanche();
     const borrowableFtm = await getBorrowableMimsFantom();
     const borrowableArbi = await getBorrowableMimsArbitrum();
     const borrowableBsc = await getBorrowableMimsBinance(); */
-    console.log("Update done.", moment().format("HH:mm:ss"));
+/*     console.log("Update done.", moment().format("HH:mm:ss"));
     let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
     borrwableEth2.split(".").join("");
     let checkedNew = borrwableEth2.split(".").join("");
@@ -159,9 +159,16 @@ app.get(
     res.json({ MIMS: sum });
   }
 );
+ */
 
-app.listen(asd, "127.0.0.1", async () => {
-  console.log(`Server listening for ${corsOptions.origin} requests ...`);
+app.set('port', (process.env.PORT || 5000));
+
+//For avoidong Heroku $PORT error
+app.get('/', function(request, response) {
+    var result = 'App is running'
+    response.send(result);
+}).listen(app.get('port'), function() {
+ console.log(`Server listening for ${corsOptions.origin} requests ...`);
   const borrwableEth = await getBorrowableMimsEthereum();
   /* const borrowableAvax = await getBorrowableMimsAvalanche();
   const borrowableFtm = await getBorrowableMimsFantom();
@@ -185,9 +192,15 @@ client.messages.create({
 
         setTimeout(() => {check22();}, 5000); 
 
- 
+
 });
 
+/* app.listen(asd, "127.0.0.1", async () => {
+ 
+
+ 
+});
+ */
 async function check22(){
   const borrwableEth = await getBorrowableMimsEthereum();
  let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
