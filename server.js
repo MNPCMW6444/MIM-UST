@@ -185,12 +185,12 @@ app.get('/', function(request, response) {
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
 console.log(sum)
-      
+ /*      
 client.messages.create({
       body: "Bot is running and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); 
+      .then(message => console.log(message.sid));  */
 
         setTimeout(() => {check22();}, 5000); 
 
@@ -213,9 +213,9 @@ async function check22(){
   console.log(sum)
 if(sum>minnininn){
  client.messages.create({
-      body: "Test: "+sum,
+      body: "There are "+sum+" MIMs!! not checking again in the next 30 minutes",
       from: "+14106715603",
       to: "+12312374619",})
       .then(message => console.log(message.sid)); }
-     setTimeout(() => {check22();}, 60000);
+     setTimeout(() => {check22();}, sum>minnininn?1800000:60000);
 }
