@@ -168,17 +168,17 @@ app.listen(PORT, "127.0.0.1", async () => {
   const borrowableArbi = await getBorrowableMimsArbitrum();
   const borrowableBsc = await getBorrowableMimsBinance(); */
 
-  /* 
+  /
   console.log("Update done.", moment().format("HH:mm:ss"));
   let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
   borrwableEth2.split(".").join("");
   let checkedNew = borrwableEth2.split(".").join("");
   checkedNew = checkedNew.split(",").join(".");
-  let sum = parseFloat(checkedNew); */
+  let sum = parseFloat(checkedNew); 
 
   try {
     await client.messages.create({
-      body: "Test: ",
+      body: "Test: "+sum,
       from: "+14106715603",
       to: "+12312374619",
     });
