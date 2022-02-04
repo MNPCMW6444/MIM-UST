@@ -14,6 +14,7 @@ import {
 import moment from "moment";
 
 import Twilio from "twilio";
+import { check } from "prettier";
 
 const PORT = 5001;
 const app = express();
@@ -175,12 +176,30 @@ app.listen(PORT, "127.0.0.1", async () => {
   let checkedNew = borrwableEth2.split(".").join("");
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
-
-    
+console.log(sum)
+    /* 
 client.messages.create({
       body: "Test: "+sum,
       from: "+14106715603",
       to: "+12312374619",})
       .then(message => console.log(message.sid));
+
+        setTimeout(() => {check();}, 5000); */
+
  
 });
+
+async function check(){
+  const borrwableEth = await getBorrowableMimsEthereum();
+ let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
+  borrwableEth2.split(".").join("");
+  let checkedNew = borrwableEth2.split(".").join("");
+  checkedNew = checkedNew.split(",").join(".");
+  let sum = parseFloat(checkedNew); 
+client.messages.create({
+      body: "Test: "+sum,
+      from: "+14106715603",
+      to: "+12312374619",})
+      .then(message => console.log(message.sid));
+     setTimeout(() => {check();}, 60000);
+}
