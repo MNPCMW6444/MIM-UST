@@ -180,7 +180,7 @@ app.listen(PORT, "127.0.0.1", async () => {
     await client.messages.create({
       body: "Test: ",
       from: "+14106715603",
-      to: "+972528971871",
+      to: "+12312374619",
     });
   } catch (e) {
     console.error(e);
