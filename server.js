@@ -167,7 +167,7 @@ app.set('port', (process.env.PORT || 5000));
 app.get('/', function(request, response) {
     var result = 'App is running'
     response.send(result);
-}).listen(app.get('port'), function() {
+}).listen(app.get('port'), async function() {
  console.log(`Server listening for ${corsOptions.origin} requests ...`);
   const borrwableEth = await getBorrowableMimsEthereum();
   /* const borrowableAvax = await getBorrowableMimsAvalanche();
