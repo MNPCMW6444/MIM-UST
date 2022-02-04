@@ -15,12 +15,12 @@ import moment from "moment";
 
 import Twilio from "twilio";
 
-const PORT = process.env.PORT || 10004;
+const asd = process.env.PORT || 10004;
 const app = express();
 const cache = CacheService.cache;
 
 app.use(cors());
-app.use(timeout(600000));
+//app.use(timeout(600000));
 
 let redis = null;
 
@@ -160,7 +160,7 @@ app.get(
   }
 );
 
-app.listen(PORT, "127.0.0.1", async () => {
+app.listen(asd, "127.0.0.1", async () => {
   console.log(`Server listening for ${corsOptions.origin} requests ...`);
   const borrwableEth = await getBorrowableMimsEthereum();
   /* const borrowableAvax = await getBorrowableMimsAvalanche();
