@@ -220,10 +220,10 @@ export const getBorrowableMimsEthereum = async () => {
     chain: "Ethereum",
     cauldrons: [],
   };
-  const BentoBoxContractEthereum = new web3_eth.eth.Contract(
+  /*  const BentoBoxContractEthereum = new web3_eth.eth.Contract(
     BentoBoxABI,
     BENTO_BOX_ADDRESS_ETH
-  );
+  ); */
   const DegenBoxContractEthereum = new web3_eth.eth.Contract(
     DegenBoxABI,
     DEGEN_BOX_ADDRESS_ETH
@@ -233,7 +233,7 @@ export const getBorrowableMimsEthereum = async () => {
     const block = await web3_eth.eth.getBlockNumber();
     for (let i = 0; i < ETH_CAULDRONS.length; i++) {
       const { name, address, type } = ETH_CAULDRONS[i];
-      if (type === 1) {
+      /*  if (type === 1) {
         const borrowableMIMs = await BentoBoxContractEthereum.methods
           .balanceOf(MIM_ADDRESS_ETH, address)
           .call(null, block);
@@ -246,31 +246,31 @@ export const getBorrowableMimsEthereum = async () => {
           new Intl.NumberFormat("de-DE").format(
             Web3.utils.fromWei(borrowableMIMs)
           )
-        ); */
-      } else {
-        const borrowableMIMs = await DegenBoxContractEthereum.methods
-          .balanceOf(MIM_ADDRESS_ETH, address)
-          .call(null, block);
-        borrowableMims.cauldrons.push({
-          name,
-          borrowableMIMs: parseInt(Web3.utils.fromWei(borrowableMIMs)),
-        });
-        /*  console.log(
+        ); 
+      } else { */
+      const borrowableMIMs = await DegenBoxContractEthereum.methods
+        .balanceOf(MIM_ADDRESS_ETH, address)
+        .call(null, block);
+      borrowableMims.cauldrons.push({
+        name,
+        borrowableMIMs: parseInt(Web3.utils.fromWei(borrowableMIMs)),
+      });
+      /*  console.log(
           `borrowable MIMs for ${name} : `,
           new Intl.NumberFormat("de-DE").format(
             Web3.utils.fromWei(borrowableMIMs)
           )
         ); */
-        if (name.substring(0, 2) == "US")
-          return (
-            "is " +
-            [
-              new Intl.NumberFormat("de-DE").format(
-                Web3.utils.fromWei(borrowableMIMs)
-              ),
-            ]
-          );
-      }
+      if (name.substring(0, 2) == "US")
+        return (
+          "is " +
+          [
+            new Intl.NumberFormat("de-DE").format(
+              Web3.utils.fromWei(borrowableMIMs)
+            ),
+          ]
+        );
+      /* } */
     }
     await redis.set(
       "byebyedai.borrowableMimsEthereum",
