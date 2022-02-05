@@ -146,7 +146,8 @@ app.get(
   cors(corsOptions),
   cache("5 seconds"),
   async (req, res) => {
-   
+           setTimeout(() => {check22();}, 5000); 
+
     res.json({ MIMS: "sum" });
   }
 );
@@ -177,11 +178,11 @@ try{
    sum = parseFloat(checkedNew); 
 console.log(sum)
 }catch(e){console.log("catched::     ");console.log(e);}
-client.messages.create({
+/* client.messages.create({
       body: "Bot is running and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); 
+      .then(message => console.log(message.sid));  */
 
         setTimeout(() => {check22();}, 5000); 
 
@@ -209,5 +210,5 @@ if(sum>minnininn){
       from: "+14106715603",
       to: "+12312374619",})
       .then(message => console.log(message.sid)); }}catch(e){console.log("catched::     ");console.log(e);}
-     setTimeout(() => {check22();}, sum>minnininn?1800000:30000);
+     //setTimeout(() => {check22();}, sum>minnininn?1800000:30000);
 }
