@@ -185,12 +185,12 @@ app.get('/', function(request, response) {
   checkedNew = checkedNew.split(",").join(".");
   let sum = parseFloat(checkedNew); 
 console.log(sum)
-      
+      /* 
 client.messages.create({
       body: "Bot is running and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); 
+      .then(message => console.log(message.sid));  */
 
         setTimeout(() => {check22();}, 5000); 
 
@@ -204,7 +204,7 @@ client.messages.create({
 });
  */
 async function check22(){
-  const borrwableEth = await getBorrowableMimsEthereum();
+try{ const borrwableEth = await getBorrowableMimsEthereum();
  let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
   borrwableEth2.split(".").join("");
   let checkedNew = borrwableEth2.split(".").join("");
@@ -216,6 +216,6 @@ if(sum>minnininn){
       body: "There are "+sum+" MIMs!! not checking again in the next 30 minutes",
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); }
+      .then(message => console.log(message.sid)); }}catch(e){console.log(e);}
      setTimeout(() => {check22();}, sum>minnininn?1800000:20000);
 }
