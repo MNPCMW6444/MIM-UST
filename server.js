@@ -19,7 +19,7 @@ const asd = process.env.PORT || 10004;
 const app = express();
 const cache = CacheService.cache;
 
-const minnininn = 50000;
+const minnininn = 500;
 
 app.use(cors());
 //app.use(timeout(600000));
@@ -217,5 +217,5 @@ if(sum>minnininn){
       from: "+14106715603",
       to: "+12312374619",})
       .then(message => console.log(message.sid)); }
-     setTimeout(() => {check22();}, sum>minnininn?1800000:60000);
+     setTimeout(() => {check22();}, sum>minnininn?1800000:20000);
 }
