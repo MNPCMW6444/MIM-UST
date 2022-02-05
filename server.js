@@ -204,12 +204,13 @@ client.messages.create({
 });
  */
 async function check22(){
-try{ const borrwableEth = await getBorrowableMimsEthereum();
+let sum=0;
+  try{ const borrwableEth = await getBorrowableMimsEthereum();
  let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
   borrwableEth2.split(".").join("");
   let checkedNew = borrwableEth2.split(".").join("");
   checkedNew = checkedNew.split(",").join(".");
-  let sum = parseFloat(checkedNew); 
+  sum = parseFloat(checkedNew); 
   console.log(sum)
 if(sum>minnininn){
  client.messages.create({
@@ -217,5 +218,6 @@ if(sum>minnininn){
       from: "+14106715603",
       to: "+12312374619",})
       .then(message => console.log(message.sid)); }}catch(e){console.log(e);}
+      if (!sum)
      setTimeout(() => {check22();}, sum>minnininn?1800000:20000);
 }
