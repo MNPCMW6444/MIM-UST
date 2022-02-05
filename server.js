@@ -170,6 +170,8 @@ app.get('/', function(request, response) {
     var result = 'App is running'
     response.send(result);
 }).listen(app.get('port'), async function() {
+  let sum = 0;
+try{
  console.log(`Server listening for ${corsOptions.origin} requests ...`);
   const borrwableEth = await getBorrowableMimsEthereum();
   /* const borrowableAvax = await getBorrowableMimsAvalanche();
@@ -183,14 +185,14 @@ app.get('/', function(request, response) {
   borrwableEth2.split(".").join("");
   let checkedNew = borrwableEth2.split(".").join("");
   checkedNew = checkedNew.split(",").join(".");
-  let sum = parseFloat(checkedNew); 
+   sum = parseFloat(checkedNew); 
 console.log(sum)
-      
-client.messages.create({
+}catch(e){console.log("catched::     ");console.log(e);}
+/* client.messages.create({
       body: "Bot is running and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); 
+      .then(message => console.log(message.sid));  */
 
         setTimeout(() => {check22();}, 5000); 
 
@@ -217,7 +219,7 @@ if(sum>minnininn){
       body: "There are "+sum+" MIMs!! not checking again in the next 30 minutes",
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); }}catch(e){console.log(e);}
+      .then(message => console.log(message.sid)); }}catch(e){console.log("catched::     ");console.log(e);}
       if (!sum)
-     setTimeout(() => {check22();}, sum>minnininn?1800000:20000);
+     setTimeout(() => {check22();}, sum>minnininn?1800000:30000);
 }
