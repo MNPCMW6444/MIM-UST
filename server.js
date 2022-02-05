@@ -139,29 +139,18 @@ app.get(
     );
     res.json(JSON.parse(emissions));
   }
-);
+);*/
 
 app.get(
   "/getBorrowableMims",
   cors(corsOptions),
   cache("5 seconds"),
   async (req, res) => {
-    console.log("Update borrowable MIMs...", moment().format("HH:mm:ss"));
-    const borrwableEth = await getBorrowableMimsEthereum();
-     const borrowableAvax = await getBorrowableMimsAvalanche();
-    const borrowableFtm = await getBorrowableMimsFantom();
-    const borrowableArbi = await getBorrowableMimsArbitrum();
-    const borrowableBsc = await getBorrowableMimsBinance(); */
-/*     console.log("Update done.", moment().format("HH:mm:ss"));
-    let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
-    borrwableEth2.split(".").join("");
-    let checkedNew = borrwableEth2.split(".").join("");
-    checkedNew = checkedNew.split(",").join(".");
-    let sum = parseFloat(checkedNew);
-    res.json({ MIMS: sum });
+   
+    res.json({ MIMS: "sum" });
   }
 );
- */
+ 
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -188,11 +177,11 @@ try{
    sum = parseFloat(checkedNew); 
 console.log(sum)
 }catch(e){console.log("catched::     ");console.log(e);}
-client.messages.create({
+/* client.messages.create({
       body: "Bot is running and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); 
+      .then(message => console.log(message.sid));  */
 
         setTimeout(() => {check22();}, 5000); 
 
