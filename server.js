@@ -19,7 +19,7 @@ const asd = process.env.PORT || 10004;
 const app = express();
 const cache = CacheService.cache;
 
-const minnininn = 50000;
+const minnininn = 30000000;
 
 app.use(cors());
 //app.use(timeout(600000));
@@ -165,7 +165,7 @@ app.get(
             body:
               "There are " +
               sum +
-              " MIMs!! not checking again in the next 30 minutes",
+              " MIMs!! checking again in 30 seconds and will alert if still >" + minnininn,
             from: "+14106715603",
             to: "+12312374619",
           })
@@ -215,6 +215,12 @@ console.log(sum)
     /*         setTimeout(() => {check22();}, 5000);
      */
     console.log("STARTEDDDD");
+
+    client.messages.create({
+      body: "Bot is running! will check available MIM every 30 sconds and will notify if MIM>"+minnininn,
+      from: "+14106715603",
+      to: "+12312374619",})
+      .then(message => console.log(message.sid)); 
   });
 
 /* app.listen(asd, "127.0.0.1", async () => {
