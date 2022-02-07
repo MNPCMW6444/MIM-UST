@@ -20,21 +20,16 @@ const DEGEN_BOX_ADDRESS_ETH =
   const ETH_CAULDRON = 
   {
     name: "UST",
-    address: "0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f".toLowerCase(),
-    type: 2,
-  }
+    address: "0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f".toLowerCase(),  }
 ;
 
 const getBorrowableMimsEthereum = async () => {
   console.log("-- ETHEREUM --");
   let borrowableMims = {
     chain: "Ethereum",
-    cauldrons: [],
+    cauldron: {},
   };
-  const BentoBoxContractEthereum = new web3_eth.eth.Contract(
-    BentoBoxABI,
-    BENTO_BOX_ADDRESS_ETH
-  );
+
   const DegenBoxContractEthereum = new web3_eth.eth.Contract(
     DegenBoxABI,
     DEGEN_BOX_ADDRESS_ETH
@@ -42,37 +37,20 @@ const getBorrowableMimsEthereum = async () => {
 
   try {
     const block = await web3_eth.eth.getBlockNumber();
-    for (let i = 0; i < ETH_CAULDRONS.length; i++) {
-      const { name, address, type } = ETH_CAULDRONS[i];
-      if (type === 1) {
-        const borrowableMIMs = await BentoBoxContractEthereum.methods
-          .balanceOf(MIM_ADDRESS_ETH, address)
-          .call(null, block);
-        borrowableMims.cauldrons.push({
-          name,
-          borrowableMIMs: parseInt(Web3.utils.fromWei(borrowableMIMs)),
-        });
-        console.log(
-          `borrowable MIMs for ${name} : `,
-          new Intl.NumberFormat("de-DE").format(
-            Web3.utils.fromWei(borrowableMIMs)
-          )
-        );
-      } else {
+      const { name, address } = ETH_CAULDRON;
         const borrowableMIMs = await DegenBoxContractEthereum.methods
           .balanceOf(MIM_ADDRESS_ETH, address)
           .call(null, block);
-        borrowableMims.cauldrons.push({
+        borrowableMims.cauldron={
           name,
           borrowableMIMs: parseInt(Web3.utils.fromWei(borrowableMIMs)),
-        });
+        };
         console.log(
           `borrowable MIMs for ${name} : `,
           new Intl.NumberFormat("de-DE").format(
             Web3.utils.fromWei(borrowableMIMs)
           )
         );
-        if (name.substring(0, 2) == "US")
           return (
             "is " +
             [
@@ -82,12 +60,8 @@ const getBorrowableMimsEthereum = async () => {
             ]
           );
       }
-    }
-    await redis.set(
-      "byebyedai.borrowableMimsEthereum",
-      JSON.stringify(borrowableMims)
-    );
-  } catch (error) {
+    
+   catch (error) {
     const cachedBorrowableMimsEthereum = await redis.get(
       "byebyedai.borrowableMimsEthereum"
     );
