@@ -1,8 +1,6 @@
 import express from "express";
 import CacheService from "express-api-cache";
-import {
-  getBorrowableMimsEthereum
-} from "./borrowableMims";
+import {getBorrowableMimsEthereum} from "./borrowableMims";
 
 import Twilio from "twilio";
 
