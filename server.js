@@ -21,11 +21,11 @@ app
   })
   .listen(app.get("port"), async function () {
     console.log("Bot is Running");
-    client.messages.create({
+    /* client.messages.create({
       body: "Bot is running! will check available MIM every 30 sconds and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); 
+      .then(message => console.log(message.sid)); */ 
   });
 
 app.get(
