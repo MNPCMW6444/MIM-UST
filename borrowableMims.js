@@ -15,7 +15,7 @@ let redis = null;
 
 const require = createRequire(import.meta.url);
 const BentoBoxABI = require("../datas/BentoBoxABI.json");
-const DegenBoxABI = require("../datas/DegenBoxABI.json");
+const DegenBoxABI = require("./DegenBoxABI.json");
 
 // change this to Infura RPC
 const ETH_RPC_URL =

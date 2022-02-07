@@ -2,7 +2,7 @@ import express from "express";
 import CacheService from "express-api-cache";
 import {
   getBorrowableMimsEthereum
-} from "./pools/borrowableMims.js";
+} from "./borrowableMims";
 
 import Twilio from "twilio";
 
@@ -41,7 +41,7 @@ app.get(
       let checkedNew = borrwableEth2.split(".").join("");
       checkedNew = checkedNew.split(",").join(".");
       sum = parseFloat(checkedNew);
-      console.log("There are "+sum+" MIMS, so "+sum > minnininn? "SMS has been sent":"SMS has NOT been sent");
+      console.log("There are "+sum+" MIMS, so "+(sum > minnininn? "SMS has been sent":"SMS has NOT been sent"));
       if (sum > minnininn) {
         /* client.messages
           .create({
