@@ -41,7 +41,7 @@ app.get(
       let checkedNew = borrwableEth2.split(".").join("");
       checkedNew = checkedNew.split(",").join(".");
       sum = parseFloat(checkedNew);
-      console.log(sum);
+      console.log("There are "+sum+" MIMS, so "+sum > minnininn? "SMS has been sent":"SMS has NOT been sent");
       if (sum > minnininn) {
         /* client.messages
           .create({
