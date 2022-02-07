@@ -24,7 +24,6 @@ const DEGEN_BOX_ADDRESS_ETH =
 ;
 
 const getBorrowableMimsEthereum = async () => {
-  console.log("-- ETHEREUM --");
   let borrowableMims = {
     chain: "Ethereum",
     cauldron: {},
@@ -74,11 +73,11 @@ app
   })
   .listen(app.get("port"), async function () {
     console.log("Bot is Running");
-    /* client.messages.create({
+    client.messages.create({
       body: "Bot is running! will check available MIM every 30 sconds and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); */ 
+      .then(message => console.log(message.sid)); 
   });
 
 app.get(
@@ -88,7 +87,6 @@ app.get(
     let sum = 0;
     try {
       const borrwableEth = await getBorrowableMimsEthereum();
-      console.log("done");
       let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
       borrwableEth2.split(".").join("");
       let checkedNew = borrwableEth2.split(".").join("");
