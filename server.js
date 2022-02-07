@@ -1,5 +1,4 @@
 import express from "express";
-import cors from "cors";
 import CacheService from "express-api-cache";
 import {
   getBorrowableMimsEthereum
@@ -31,7 +30,6 @@ app
 
 app.get(
   "/getBorrowableMims",
-  cors(corsOptions),
   cache("5 seconds"),
   async (req, res) => {
     let sum = 0;
