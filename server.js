@@ -2,9 +2,7 @@ import express from "express";
 import CacheService from "express-api-cache";
 import Web3 from "web3";
 import Twilio from "twilio";
-import { createRequire } from "module";
 
-const require = createRequire(import.meta.url);
 const DegenBoxABI = require("./DegenBoxABI.json");
 
 const ETH_RPC_URL =
@@ -45,12 +43,6 @@ const getBorrowableMimsEthereum = async () => {
           name,
           borrowableMIMs: parseInt(Web3.utils.fromWei(borrowableMIMs)),
         };
-        console.log(
-          `borrowable MIMs for ${name} : `,
-          new Intl.NumberFormat("de-DE").format(
-            Web3.utils.fromWei(borrowableMIMs)
-          )
-        );
           return (
             "is " +
             [
@@ -60,18 +52,9 @@ const getBorrowableMimsEthereum = async () => {
             ]
           );
       }
-    
    catch (error) {
-    const cachedBorrowableMimsEthereum = await redis.get(
-      "byebyedai.borrowableMimsEthereum"
-    );
-    if (cachedBorrowableMimsEthereum !== null) {
-      borrowableMims = JSON.parse(cachedBorrowableMimsEthereum);
-    }
     console.log("Error on Ethereum fetch : ", error);
   }
-  console.log("\n");
-  return borrowableMims;
 };
 
 const app = express();
