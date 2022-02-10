@@ -74,12 +74,12 @@ app
   })
   .listen(app.get("port"), async function () {
     console.log("Bot is Running");
-    client.messages.create({
+    /* client.messages.create({
       body: "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>"+minnininn+" or Anc Deposit is less than "+minianc,
       from: "+14106715603",
       to: "+12312374619",})
       .then(message => console.log(message.sid));
-  });
+  }); */
 
 app.get(
   "/getBorrowableMims",
@@ -122,10 +122,14 @@ app.get(
   async (req, res) => {
 
     let value = req.params.value;
-
+console.log("value is "+value);
     let deposited = value.split(",").join("");
-    deposited=deposited.substring(0,deposited.indexOf("%"));
-    deposited = parseInt(value.split(" ").join(""));
+    console.log("deposited is "+deposited);
+
+    deposited=deposited.substring(0,deposited.indexOf("%"));    console.log("deposited is "+deposited);
+
+    deposited = parseInt(value.split(" ").join(""));    console.log("deposited is "+deposited);
+
 
 
     if (deposited < minianc)
