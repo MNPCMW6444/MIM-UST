@@ -74,11 +74,11 @@ app
   })
   .listen(app.get("port"), async function () {
     console.log("Bot is Running");
-    /* client.messages.create({
+    client.messages.create({
       body: "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>"+minnininn+" or Anc Deposit is less than "+minianc,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid));*/
+      .then(message => console.log(message.sid));
   }); 
 
 app.get(
@@ -133,9 +133,9 @@ console.log("value is "+value);
 
 
 
-    if (deposited < minianc){console.log(3);}
+    if (deposited < minianc)//{console.log(3);}
 
-/* 
+
   client.messages
     .create({
       body:
@@ -143,7 +143,7 @@ console.log("value is "+value);
       from: "+14106715603",
       to: "+12312374619",
     })
-    .then((message) => console.log(message.sid)); */
+    .then((message) => console.log(message.sid));
     
     console.log("Anc deposit is "+deposited+" UST, so "+(deposited < minianc? "SMS has been sent":"SMS has NOT been sent"));
 
