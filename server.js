@@ -116,7 +116,7 @@ app.get(
 
 
 app.get(
-  "/anchor",
+  "/anchor:value",
   cache("5 seconds"),
   async (req, res) => {
 
