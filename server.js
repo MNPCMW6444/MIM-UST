@@ -61,6 +61,7 @@ const getBorrowableMimsEthereum = async () => {
 const app = express();
 const cache = CacheService.cache;
 const minnininn = 1000000;
+const minianc = 5500000000;
 const accountSid = "ACb56542d282e469142290abbc1c21b238";
 const authToken = "5e093feacc8d6afbc6471b70a641fa3d";
 const client = new Twilio(accountSid, authToken);
@@ -73,11 +74,11 @@ app
   })
   .listen(app.get("port"), async function () {
     console.log("Bot is Running");
-    /* client.messages.create({
-      body: "Bot is running! will check available MIM every 30 sconds and will notify if MIM>"+minnininn,
+    client.messages.create({
+      body: "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>"+minnininn+" or Anc Deposit is less than "+minianc,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); */ 
+      .then(message => console.log(message.sid));
   });
 
 app.get(
@@ -123,19 +124,23 @@ app.get(
     let value = req.params.value;
 
     let deposited = parseInt(value.split(",").join(""));
+    let deposited = parseInt(value.split(" ").join(""));
 
-    if (deposited < 5500000000)
+    if (deposited < minianc)
 
 
   client.messages
     .create({
       body:
-        "DEPOSIT ON ANCHOR IS LESS THAN "+5500000000,
+        "DEPOSIT ON ANCHOR IS LESS THAN "+minianc,
       from: "+14106715603",
       to: "+12312374619",
     })
-    .then((message) => console.log(message.sid)); 
+    .then((message) => console.log(message.sid));
+    
+          console.log("Anc eposit is "+deposited+" UST, so "+(deposited < minianc? "SMS has been sent":"SMS has NOT been sent"));
+
      
-    res.json({ message:deposited < 5500000000? "SMS has been sent":"SMS has NOT been sent" });
+    res.json({ message:deposited < minianc? "SMS has been sent":"SMS has NOT been sent" });
   }
 );
