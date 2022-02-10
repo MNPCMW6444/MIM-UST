@@ -60,7 +60,7 @@ const getBorrowableMimsEthereum = async () => {
 
 const app = express();
 const cache = CacheService.cache;
-const minnininn = 1000000;
+const minnininn = 500000;
 const minianc = 5500000000;
 const accountSid = "ACb56542d282e469142290abbc1c21b238";
 const authToken = "5e093feacc8d6afbc6471b70a641fa3d";
