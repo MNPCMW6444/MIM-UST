@@ -123,12 +123,13 @@ app.get(
 
     let value = req.params.value;
 console.log("value is "+value);
-    let deposited = value.split(",").join("");
+    let deposited = parseInt(value.split(",").join(""));
     console.log("deposited is "+deposited);
 
-    deposited=deposited.substring(0,deposited.indexOf("%"));    console.log("deposited is "+deposited);
+    //deposited=deposited.substring(0,deposited.indexOf("%"));  
+//    
 
-  console.log("deposited is "+deposited);
+  //console.log("deposited is "+deposited);
 
 
 
