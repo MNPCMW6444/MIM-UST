@@ -124,7 +124,9 @@ app.get(
     let value = req.params.value;
 
     let deposited = value.split(",").join("");
+    deposited=deposited.substring(0,deposited.indexOf("%"));
     deposited = parseInt(value.split(" ").join(""));
+
 
     if (deposited < minianc)
 
