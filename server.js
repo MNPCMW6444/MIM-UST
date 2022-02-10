@@ -124,20 +124,18 @@ app.get(
 
     let deposited = parseInt(value.split(",").join(""));
 
+    if (deposited < 5500000000)
 
 
-
-    console.log("is it 5 and almost 6? "+deposited/2+1000000000);
-   /*  
   client.messages
     .create({
       body:
-        "test message",
+        "DEPOSIT ON ANCHOR IS LESS THAN "+5500000000,
       from: "+14106715603",
       to: "+12312374619",
     })
-    .then((message) => console.log(message.sid)); */
+    .then((message) => console.log(message.sid)); 
      
-    res.json({ message:"done" });
+    res.json({ message:deposited < 5500000000? "SMS has been sent":"SMS has NOT been sent" });
   }
 );
