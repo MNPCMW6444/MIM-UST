@@ -73,11 +73,11 @@ app
   })
   .listen(app.get("port"), async function () {
     console.log("Bot is Running");
-    client.messages.create({
+    /* client.messages.create({
       body: "Bot is running! will check available MIM every 30 sconds and will notify if MIM>"+minnininn,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid)); 
+      .then(message => console.log(message.sid)); */ 
   });
 
 app.get(
@@ -110,5 +110,28 @@ app.get(
       console.log(e);
     }
     res.json({ message:sum > minnininn? "SMS has been sent":"SMS has NOT been sent" });
+  }
+);
+
+
+
+app.get(
+  "/anchor",
+  cache("5 seconds"),
+  async (req, res) => {
+
+    let value = req.params.value;
+    console.log(value);
+   /*  
+  client.messages
+    .create({
+      body:
+        "test message",
+      from: "+14106715603",
+      to: "+12312374619",
+    })
+    .then((message) => console.log(message.sid)); */
+     
+    res.json({ message:"done" });
   }
 );
