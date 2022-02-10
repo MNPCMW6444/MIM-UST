@@ -123,8 +123,8 @@ app.get(
 
     let value = req.params.value;
 
-    let deposited = parseInt(value.split(",").join(""));
-    let deposited = parseInt(value.split(" ").join(""));
+    let deposited = value.split(",").join("");
+    deposited = parseInt(value.split(" ").join(""));
 
     if (deposited < minianc)
 
