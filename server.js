@@ -128,7 +128,7 @@ app.get(
 
     if (deposited < minianc)
 
-
+/* 
   client.messages
     .create({
       body:
@@ -136,7 +136,7 @@ app.get(
       from: "+14106715603",
       to: "+12312374619",
     })
-    .then((message) => console.log(message.sid));
+    .then((message) => console.log(message.sid)); */
     
           console.log("Anc eposit is "+deposited+" UST, so "+(deposited < minianc? "SMS has been sent":"SMS has NOT been sent"));
 
