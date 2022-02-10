@@ -78,8 +78,8 @@ app
       body: "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>"+minnininn+" or Anc Deposit is less than "+minianc,
       from: "+14106715603",
       to: "+12312374619",})
-      .then(message => console.log(message.sid));
-  }); */
+      .then(message => console.log(message.sid));*/
+  }); 
 
 app.get(
   "/getBorrowableMims",
@@ -132,7 +132,7 @@ console.log("value is "+value);
 
 
 
-    if (deposited < minianc)
+    if (deposited < minianc){console.log(3);}
 
 /* 
   client.messages
@@ -144,7 +144,7 @@ console.log("value is "+value);
     })
     .then((message) => console.log(message.sid)); */
     
-          console.log("Anc eposit is "+deposited+" UST, so "+(deposited < minianc? "SMS has been sent":"SMS has NOT been sent"));
+    console.log("Anc deposit is "+deposited+" UST, so "+(deposited < minianc? "SMS has been sent":"SMS has NOT been sent"));
 
      
     res.json({ message:deposited < minianc? "SMS has been sent":"SMS has NOT been sent" });
