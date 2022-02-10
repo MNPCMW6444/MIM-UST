@@ -128,7 +128,7 @@ console.log("value is "+value);
 
     deposited=deposited.substring(0,deposited.indexOf("%"));    console.log("deposited is "+deposited);
 
-    deposited = parseInt(value.split(" ").join(""));    console.log("deposited is "+deposited);
+  console.log("deposited is "+deposited);
 
 
 
@@ -138,7 +138,7 @@ console.log("value is "+value);
   client.messages
     .create({
       body:
-        "DEPOSIT ON ANCHOR IS LESS THAN "+minianc,
+        "DEPOSIT ON ANCHOR IS "+deposited+" - LESS THAN "+minianc,
       from: "+14106715603",
       to: "+12312374619",
     })
