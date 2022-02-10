@@ -121,7 +121,13 @@ app.get(
   async (req, res) => {
 
     let value = req.params.value;
-    console.log(value);
+
+    let deposited = parseInt(value.split(",").join(""));
+
+
+
+
+    console.log("is it 5 and almost 6? "+deposited/2+1000000000);
    /*  
   client.messages
     .create({
