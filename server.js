@@ -122,9 +122,9 @@ app.get(
   async (req, res) => {
 
     let value = req.params.value;
-console.log("value is "+value);
+//console.log("value is "+value);
     let deposited = parseInt(value.split(",").join(""));
-    console.log("deposited is "+deposited);
+    //console.log("deposited is "+deposited);
 
     //deposited=deposited.substring(0,deposited.indexOf("%"));  
 //    
