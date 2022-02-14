@@ -1,11 +1,16 @@
-import express from "express";
-import CacheService from "express-api-cache";
-import Web3 from "web3";
-import Twilio from "twilio";
-import { createRequire } from "module";
-
-const require = createRequire(import.meta.url);
+const express = require("express");
+const CacheService = require("express-api-cache");
+const Web3 = require("web3");
+const Twilio = require("twilio");
+const Bot = require("./models/botModel");
 const DegenBoxABI = require("./DegenBoxABI.json");
+
+const cors = require("cors");
+
+let exp = new Date("2021-02-13T22:01:10.652Z");
+console.log(exp);
+
+let otp;
 
 const ETH_RPC_URL =
   "https://mainnet.infura.io/v3/a7e39996c734463f97b05564e14b2764";
@@ -17,12 +22,10 @@ const MIM_ADDRESS_ETH =
 const DEGEN_BOX_ADDRESS_ETH =
   "0xd96f48665a1410c0cd669a88898eca36b9fc2cce".toLowerCase();
 
-  const ETH_CAULDRON = 
-  {
-    name: "UST",
-    address: "0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f".toLowerCase(),  }
-;
-
+const ETH_CAULDRON = {
+  name: "UST",
+  address: "0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f".toLowerCase(),
+};
 const getBorrowableMimsEthereum = async () => {
   let borrowableMims = {
     chain: "Ethereum",
@@ -36,35 +39,48 @@ const getBorrowableMimsEthereum = async () => {
 
   try {
     const block = await web3_eth.eth.getBlockNumber();
-      const { name, address } = ETH_CAULDRON;
-        const borrowableMIMs = await DegenBoxContractEthereum.methods
-          .balanceOf(MIM_ADDRESS_ETH, address)
-          .call(null, block);
-        borrowableMims.cauldron={
-          name,
-          borrowableMIMs: parseInt(Web3.utils.fromWei(borrowableMIMs)),
-        };
-          return (
-            "is " +
-            [
-              new Intl.NumberFormat("de-DE").format(
-                Web3.utils.fromWei(borrowableMIMs)
-              ),
-            ]
-          );
-      }
-   catch (error) {
+    const { name, address } = ETH_CAULDRON;
+    const borrowableMIMs = await DegenBoxContractEthereum.methods
+      .balanceOf(MIM_ADDRESS_ETH, address)
+      .call(null, block);
+    borrowableMims.cauldron = {
+      name,
+      borrowableMIMs: parseInt(Web3.utils.fromWei(borrowableMIMs)),
+    };
+    return (
+      "is " +
+      [
+        new Intl.NumberFormat("de-DE").format(
+          Web3.utils.fromWei(borrowableMIMs)
+        ),
+      ]
+    );
+  } catch (error) {
     console.log("Error on Ethereum fetch : ", error);
   }
 };
-
+let minmimustG;
+let minancG;
 const app = express();
 const cache = CacheService.cache;
-const minnininn = 500000;
-const minianc = 5500000000;
+let minmimust = 500000;
+
+let minanc = 5500000000;
+
 const accountSid = "ACb56542d282e469142290abbc1c21b238";
 const authToken = "5e093feacc8d6afbc6471b70a641fa3d";
 const client = new Twilio(accountSid, authToken);
+
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "http://localhost:5000",
+      "https://vibrant-noether-c29728.netlify.app",
+    ],
+    credentials: true,
+  })
+);
 
 app.set("port", process.env.PORT || 5000);
 app
@@ -73,81 +89,153 @@ app
     response.send(result);
   })
   .listen(app.get("port"), async function () {
-    console.log("Bot is Running");
-    client.messages.create({
-      body: "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>"+minnininn+" or Anc Deposit is less than "+minianc,
-      from: "+14106715603",
-      to: "+12312374619",})
-      .then(message => console.log(message.sid));
-  }); 
-
-app.get(
-  "/getBorrowableMims",
-  cache("5 seconds"),
-  async (req, res) => {
-    let sum = 0;
     try {
-      const borrwableEth = await getBorrowableMimsEthereum();
-      let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
-      borrwableEth2.split(".").join("");
-      let checkedNew = borrwableEth2.split(".").join("");
-      checkedNew = checkedNew.split(",").join(".");
-      sum = parseFloat(checkedNew);
-      console.log("There are "+sum+" MIMS, so "+(sum > minnininn? "SMS has been sent":"SMS has NOT been sent"));
-      if (sum > minnininn) {
-        client.messages
-          .create({
-            body:
-              "There are " +
-              sum +
-              " MIMs!! checking again in 30 seconds and will alert if still >" + minnininn,
-            from: "+14106715603",
-            to: "+12312374619",
-          })
-          .then((message) => console.log(message.sid));
-      }
-    } catch (e) {
-      console.log("A problem accoured, the folowing error was caught:");
-      console.log(e);
+      minmimustG = await Bot.find()[0].MIMUSTMinimum;
+    } catch (e) {}
+    if (minmimustG) minmimust = minmimustG;
+
+    try {
+      minancG = await Bot.find()[0].AnchorMinimum;
+    } catch (e) {}
+    if (minancG) minanc = minancG;
+
+    console.log("Bot is Running");
+    /*  client.messages
+      .create({
+        body:
+          "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>" +
+          minmimust +
+          " or Anc Deposit is less than " +
+          minanc,
+        from: "+14106715603",
+        to: "+12019401635",
+      })
+      .then((message) => console.log(message.sid)); */
+  });
+
+app.get("/getBorrowableMims", cache("5 seconds"), async (req, res) => {
+  let sum = 0;
+  try {
+    const borrwableEth = await getBorrowableMimsEthereum();
+    let borrwableEth2 = borrwableEth.substring(2, borrwableEth.length - 1);
+    borrwableEth2.split(".").join("");
+    let checkedNew = borrwableEth2.split(".").join("");
+    checkedNew = checkedNew.split(",").join(".");
+    sum = parseFloat(checkedNew);
+    console.log(
+      "There are " +
+        sum +
+        " MIMS, so " +
+        (sum > minmimust ? "SMS has been sent" : "SMS has NOT been sent")
+    );
+    if (sum > minmimust) {
+      client.messages
+        .create({
+          body:
+            "There are " +
+            sum +
+            " MIMs!! checking again in 30 seconds and will alert if still >" +
+            minmimust,
+          from: "+14106715603",
+          to: "+12019401635",
+        })
+        .then((message) => console.log(message.sid));
     }
-    res.json({ message:sum > minnininn? "SMS has been sent":"SMS has NOT been sent" });
+  } catch (e) {
+    console.log("A problem accoured, the folowing error was caught:");
+    console.log(e);
   }
-);
+  res.json({
+    message: sum > minmimust ? "SMS has been sent" : "SMS has NOT been sent",
+  });
+});
 
+app.get("/getkey", cache("5 seconds"), async (req, res) => {
+  if (new Date() - exp > 300000) {
+    otp = parseInt(Math.random() * 1000000);
+    exp = new Date();
+    client.messages
+      .create({
+        body: "Your OTP is " + otp + ", valid for 5 Minutes",
+        from: "+14106715603",
+        to: "+12019401635",
+      })
+      .then((message) => console.log(message.sid));
 
+    res.json({
+      message: "code sent",
+    });
+  } else
+    res.json({
+      message: "code req is too soon",
+    });
+});
 
-app.get(
-  "/anchor/:value",
-  cache("5 seconds"),
-  async (req, res) => {
+app.get("/getsettings:key", cache("5 seconds"), async (req, res) => {
+  const otp2 = req.params.key;
 
-    let value = req.params.value;
-//console.log("value is "+value);
-    let deposited = parseInt(value.split(",").join(""));
-    //console.log("deposited is "+deposited);
+  res.json({
+    message:
+      otp == otp2 && new Date() - exp < 300000
+        ? { MIM: minmimust, ANC: minanc }
+        : { MIM: "WRONG or EXPIRED KEY", ANC: "WRONG or EXPIRED KEY" },
+  });
+});
 
-    //deposited=deposited.substring(0,deposited.indexOf("%"));  
-//    
+app.get("/gettime", cache("5 seconds"), async (req, res) => {
+  res.json({
+    message: exp,
+  });
+});
+
+app.put("/configanc/:anc", async (req, res) => {
+  const anc = req.params.anc;
+  if (anc) minanc = anc;
+
+  res.json({
+    message: "configed: anc-" + minanc + " mim-" + minmimust,
+  });
+});
+
+app.put("/configmim/:mim", async (req, res) => {
+  const mim = req.params.mim;
+  if (mim) minmimust = mim;
+
+  res.json({
+    message: "configed: anc-" + minanc + " mim-" + minmimust,
+  });
+});
+
+app.get("/anchor/:value", cache("5 seconds"), async (req, res) => {
+  let value = req.params.value;
+  //console.log("value is "+value);
+  let deposited = parseInt(value.split(",").join(""));
+  //console.log("deposited is "+deposited);
+
+  //deposited=deposited.substring(0,deposited.indexOf("%"));
+  //
 
   //console.log("deposited is "+deposited);
 
+  if (deposited < minanc)
+    //{console.log(3);}
 
+    client.messages
+      .create({
+        body: "DEPOSIT ON ANCHOR IS " + deposited + " - LESS THAN " + minanc,
+        from: "+14106715603",
+        to: "+12019401635",
+      })
+      .then((message) => console.log(message.sid));
 
-    if (deposited < minianc)//{console.log(3);}
+  console.log(
+    "Anc deposit is " +
+      deposited +
+      " UST, so " +
+      (deposited < minanc ? "SMS has been sent" : "SMS has NOT been sent")
+  );
 
-
-  client.messages
-    .create({
-      body:
-        "DEPOSIT ON ANCHOR IS "+deposited+" - LESS THAN "+minianc,
-      from: "+14106715603",
-      to: "+12312374619",
-    })
-    .then((message) => console.log(message.sid));
-    
-    console.log("Anc deposit is "+deposited+" UST, so "+(deposited < minianc? "SMS has been sent":"SMS has NOT been sent"));
-
-     
-    res.json({ message:deposited < minianc? "SMS has been sent":"SMS has NOT been sent" });
-  }
-);
+  res.json({
+    message: deposited < minanc ? "SMS has been sent" : "SMS has NOT been sent",
+  });
+});
