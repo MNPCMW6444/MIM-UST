@@ -106,7 +106,7 @@ app
           "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>" +
           minmimust +
           " or Anc Deposit is less than " +
-          minanc,
+          minanc+" and now configurable at: https://vibrant-noether-c29728.netlify.app",
         from: "+14106715603",
         to: "+12312374619",
       })
