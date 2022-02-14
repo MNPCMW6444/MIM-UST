@@ -100,7 +100,7 @@ app
     if (minancG) minanc = minancG;
 
     console.log("Bot is Running");
-    /*  client.messages
+     client.messages
       .create({
         body:
           "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>" +
@@ -108,9 +108,9 @@ app
           " or Anc Deposit is less than " +
           minanc,
         from: "+14106715603",
-        to: "+12019401635",
+        to: "+12312374619",
       })
-      .then((message) => console.log(message.sid)); */
+      .then((message) => console.log(message.sid));
   });
 
 app.get("/getBorrowableMims", cache("5 seconds"), async (req, res) => {
@@ -137,7 +137,7 @@ app.get("/getBorrowableMims", cache("5 seconds"), async (req, res) => {
             " MIMs!! checking again in 30 seconds and will alert if still >" +
             minmimust,
           from: "+14106715603",
-          to: "+12019401635",
+          to: "+12312374619",
         })
         .then((message) => console.log(message.sid));
     }
@@ -158,7 +158,7 @@ app.get("/getkey", cache("5 seconds"), async (req, res) => {
       .create({
         body: "Your OTP is " + otp + ", valid for 5 Minutes",
         from: "+14106715603",
-        to: "+12019401635",
+        to: "+12312374619",
       })
       .then((message) => console.log(message.sid));
 
@@ -224,7 +224,7 @@ app.get("/anchor/:value", cache("5 seconds"), async (req, res) => {
       .create({
         body: "DEPOSIT ON ANCHOR IS " + deposited + " - LESS THAN " + minanc,
         from: "+14106715603",
-        to: "+12019401635",
+        to: "+12312374619",
       })
       .then((message) => console.log(message.sid));
 
