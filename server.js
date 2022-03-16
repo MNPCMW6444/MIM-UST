@@ -239,3 +239,38 @@ app.get("/anchor/:value", cache("5 seconds"), async (req, res) => {
     message: deposited < minanc ? "SMS has been sent" : "SMS has NOT been sent",
   });
 });
+
+
+app.get("/edge/:value", cache("5 seconds"), async (req, res) => {
+  let value = req.params.value;
+  //console.log("value is "+value);
+  let deposited = parseInt(value.split(",").join(""));
+  //console.log("deposited is "+deposited);
+
+  //deposited=deposited.substring(0,deposited.indexOf("%"));
+  //
+
+  //console.log("deposited is "+deposited);
+
+  if (deposited > 15000000)
+    //{console.log(3);}
+
+    client.messages
+      .create({
+        body: "edge is now more than 15M, it is:"+deposited,
+        from: "+14106715603",
+        to: "+12312374619",
+      })
+      .then((message) => console.log(message.sid));
+
+  console.log(
+    "Edge limit is " +
+      deposited +
+      " so " +
+      (deposited > 15000000 ? "SMS has been sent" : "SMS has NOT been sent")
+  );
+
+  res.json({
+    message: deposited > 15000000 ? "SMS has been sent" : "SMS has NOT been sent",
+  });
+});
