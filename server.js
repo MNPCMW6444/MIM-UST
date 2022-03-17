@@ -61,6 +61,9 @@ const getBorrowableMimsEthereum = async () => {
 };
 let minmimustG;
 let minancG;
+
+let lastedge = 15000000;
+
 const app = express();
 const cache = CacheService.cache;
 let minmimust = 500000;
@@ -252,8 +255,9 @@ app.get("/edge/:value", cache("5 seconds"), async (req, res) => {
 
   //console.log("deposited is "+deposited);
 
-  if (deposited > 15000000)
+  if (deposited > lastedge)
     //{console.log(3);}
+    
 
     client.messages
       .create({
@@ -267,10 +271,11 @@ app.get("/edge/:value", cache("5 seconds"), async (req, res) => {
     "Edge limit is " +
       deposited +
       " so " +
-      (deposited > 15000000 ? "SMS has been sent" : "SMS has NOT been sent")
+      (deposited > lastedge ? "SMS has been sent" : "SMS has NOT been sent")
   );
 
   res.json({
-    message: deposited > 15000000 ? "SMS has been sent" : "SMS has NOT been sent",
+    message: deposited > lastedge ? "SMS has been sent" : "SMS has NOT been sent",
   });
+  lastedge = deposited;
 });
