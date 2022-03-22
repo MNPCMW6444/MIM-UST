@@ -61,14 +61,11 @@ const getBorrowableMimsEthereum = async () => {
 };
 let minmimustG;
 let minancG;
-
-let lastedge = 15000000;
-
 const app = express();
 const cache = CacheService.cache;
-let minmimust = 500000;
+let minmimust = 20000;
 
-let minanc = 5500000000;
+let minanc = 11000000000;
 
 const accountSid = "ACb56542d282e469142290abbc1c21b238";
 const authToken = "5e093feacc8d6afbc6471b70a641fa3d";
@@ -79,7 +76,7 @@ app.use(
     origin: [
       "http://localhost:3000",
       "http://localhost:5000",
-      "https://vibrant-noether-c29728.netlify.app",
+      "https://laughing-murdock-38b76c.netlify.app",
     ],
     credentials: true,
   })
@@ -103,17 +100,19 @@ app
     if (minancG) minanc = minancG;
 
     console.log("Bot is Running");
-     client.messages
+
+    console.log("seningsms");
+    client.messages
       .create({
         body:
           "Bot is running! will check available MIM and ANC Depsit every 30 sconds and will notify if MIM>" +
           minmimust +
           " or Anc Deposit is less than " +
-          minanc+" and now configurable at: https://vibrant-noether-c29728.netlify.app",
+          minanc,
         from: "+14106715603",
         to: "+12312374619",
       })
-      .then((message) => console.log(message.sid));
+      .then((message) => console.log("done:" + message.sid));
   });
 
 app.get("/getBorrowableMims", cache("5 seconds"), async (req, res) => {
@@ -165,6 +164,8 @@ app.get("/getkey", cache("5 seconds"), async (req, res) => {
       })
       .then((message) => console.log(message.sid));
 
+    console.log("otp is " + otp);
+
     res.json({
       message: "code sent",
     });
@@ -191,19 +192,39 @@ app.get("/gettime", cache("5 seconds"), async (req, res) => {
   });
 });
 
-app.put("/configanc/:anc", async (req, res) => {
-  const anc = req.params.anc;
-  if (anc) minanc = anc;
+app.put("/configanc", async (req, res) => {
+  const { anc } = req.body;
+
+  if (anc) {
+    minanc = anc;
+    console.log("seningsms");
+    client.messages
+      .create({
+        body: "configed: anc-" + minanc + " mim-" + minmimust,
+        from: "+14106715603",
+        to: "+12312374619",
+      })
+      .then((message) => console.log("done:" + message.sid));
+  }
 
   res.json({
     message: "configed: anc-" + minanc + " mim-" + minmimust,
   });
 });
 
-app.put("/configmim/:mim", async (req, res) => {
-  const mim = req.params.mim;
-  if (mim) minmimust = mim;
+app.put("/configmim", async (req, res) => {
+  const { mim } = req.body;
 
+  if (mim) {
+    minmimust = mim;
+    client.messages
+      .create({
+        body: "configed: anc-" + minanc + " mim-" + minmimust,
+        from: "+14106715603",
+        to: "+12312374619",
+      })
+      .then((message) => console.log("done:" + message.sid));
+  }
   res.json({
     message: "configed: anc-" + minanc + " mim-" + minmimust,
   });
@@ -241,41 +262,4 @@ app.get("/anchor/:value", cache("5 seconds"), async (req, res) => {
   res.json({
     message: deposited < minanc ? "SMS has been sent" : "SMS has NOT been sent",
   });
-});
-
-
-app.get("/edge/:value", cache("5 seconds"), async (req, res) => {
-  let value = req.params.value;
-  //console.log("value is "+value);
-  let deposited = parseInt(value.split(",").join(""));
-  //console.log("deposited is "+deposited);
-
-  //deposited=deposited.substring(0,deposited.indexOf("%"));
-  //
-
-  //console.log("deposited is "+deposited);
-
-  if (deposited > lastedge)
-    //{console.log(3);}
-    
-
-    client.messages
-      .create({
-        body: "edge is now more than 15M, it is:"+deposited,
-        from: "+14106715603",
-        to: "+12312374619",
-      })
-      .then((message) => console.log(message.sid));
-
-  console.log(
-    "Edge limit is " +
-      deposited +
-      " so " +
-      (deposited > lastedge ? "SMS has been sent" : "SMS has NOT been sent")
-  );
-
-  res.json({
-    message: deposited > lastedge ? "SMS has been sent" : "SMS has NOT been sent",
-  });
-  lastedge = deposited;
 });
